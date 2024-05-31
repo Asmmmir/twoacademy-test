@@ -3,20 +3,20 @@
         <form class="row g-3" @submit.prevent="submitForm">
             <div class="col-md-6">
                 <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" v-model="form.name">
+                <input required type="text" class="form-control" id="name" v-model="form.name" placeholder="Введите имя">
             </div>
             <div class="col-md-6">
                 <label for="login" class="form-label">Login</label>
-                <input type="text" class="form-control" id="login" v-model="form.login">
+                <input required type="text" class="form-control" id="login" v-model="form.login" placeholder="Введите логин">
             </div>
             <div class="col-12">
                 <label for="password" class="form-label">Password</label>
-                <input type="text" class="form-control" id="password" v-model="form.password">
+                <input required type="text" class="form-control" id="password" v-model="form.password" placeholder="Введите пароль">
             </div>
             <div class="col-md-4">
                 <label for="inputState" class="form-label">Role</label>
                 <select id="inputState" class="form-select" v-model="form.role">
-                    <option disabled>Choose...</option>
+                    <option selected disabled >Выберите роль</option>
                     <option :key="type" :value="type.name" v-for="type in userTypes">{{ type.name }}</option>
                 </select>
             </div>
@@ -40,7 +40,6 @@ export default {
                 password: '',
                 role: '',
             }
-
 
         }
     },
@@ -66,6 +65,10 @@ export default {
             }
         },
         async submitForm() {
+            if((this.form.name.trim() || this.form.login.trim() || this.form.password.trim()).length <= 3 ) {
+                alert('Заполните поля корректно')
+                return;
+            }
             const newUser = {
                 name: this.form.name,
                 login: this.form.login,
@@ -102,8 +105,8 @@ export default {
     display: block;
     position: absolute;
     background-color: white;
-    width: 500px;
-    height: 500px;
+    max-width: 500px;
+    height: min-content;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);

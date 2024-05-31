@@ -28,7 +28,7 @@
               <td>{{ user.login }}</td>
               <td>{{ user.password }}</td>
               <td>{{ getUserRole(user.user_type_id) }}</td>
-              <td class="d-flex gap-2">
+              <td class="d-flex justify-content-end gap-2">
                 <button class="btn btn-primary" @click="editUser(user)">Edit</button>
                 <button class="btn btn-danger" @click="deleteUser(user.sm_user_id)">Delete</button>
               </td>
@@ -37,8 +37,8 @@
         </table>
       </div>
     </div>
-    <AddUser :modalShow="modalShow" :closeModal="closeModal"  />
-    <EditUser :showEdit="showEdit" :closeEdit="closeEdit" :user="editUserDetails" :userTypes="userTypes" />
+      <AddUser :modalShow="modalShow" :closeModal="closeModal"  />
+      <EditUser :showEdit="showEdit" :closeEdit="closeEdit" :user="editUserDetails" :userTypes="userTypes" />
   </div>
 </template>
 

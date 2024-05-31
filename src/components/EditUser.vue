@@ -1,5 +1,5 @@
 <template>
-    <div v-if="showEdit" class="edit">
+    <div v-if="showEdit" class="edit shadow-xl">
         <form class="row g-3" @submit.prevent="submitForm">
             <div class="col-md-6">
                 <label for="name" class="form-label">Name</label>
@@ -14,8 +14,8 @@
                 <input type="text" class="form-control" id="password" v-model="form.password">
             </div>
             <div class="col-md-4">
-                <label for="inputState" class="form-label">Role</label>
-                <select id="inputState" class="form-select" v-model="form.role">
+                <label for="role" class="form-label">Role</label>
+                <select id="role" class="form-select" v-model="form.role">
                     <option disabled>Choose...</option>
                     <option v-for="type in userTypesEdit" :key="type.id" :value="type.name">{{ type.name }}</option>
                 </select>
@@ -34,6 +34,24 @@ export default {
     computed: {
         userTypesEdit() {
             return this.$store.state.userTypes;
+        },
+
+    },
+    mounted() {
+        if (this.user) {
+            this.fillExistData(this.user);
+        }
+        
+    },
+    watch: {
+        user: {
+            handler(newValue) {
+                if (newValue) {
+                    this.fillExistData(newValue);
+                }
+
+            },
+            deep: true
         }
     },
     props: {
@@ -74,6 +92,13 @@ export default {
                     return 'Неизвестный тип';
             }
         },
+        fillExistData(user) {
+            this.form.name = user.name;
+            this.form.login = user.login;
+            this.form.password = user.password;
+            this.form.role = "Пользователь"
+
+        },
         async submitForm() {
             const updatedUser = {
                 sm_user_id: this.user.sm_user_id,
@@ -100,7 +125,7 @@ export default {
     position: absolute;
     background-color: white;
     width: 500px;
-    height: 500px;
+    height: min-content;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
